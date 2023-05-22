@@ -1,0 +1,6 @@
+{
+    "Dep_Conflicts": true,
+    "Check_Vulnerabilities": true,
+    "Dep_Tree": true,
+    "Bandit_Vulnerabilities": true
+}
