@@ -7,11 +7,9 @@ import os
 # Setup logger
 logging.basicConfig(level=logging.INFO, format="[INFO] %(message)s")
 logger = logging.getLogger(__name__)
-
 # Load the configuration
 with open("utils/config.json", "r") as file:
     config = json.load(file)
-
 
 def pip_packages():
     # Get a list of installed packages
@@ -20,7 +18,6 @@ def pip_packages():
     )
     installed_packages = json.loads(find_packages.stdout)
     return installed_packages
-
 
 def dep_conflicts():
     # Check for dependency conflicts
@@ -33,7 +30,6 @@ def dep_conflicts():
         logger.info(dependency_conflicts.stdout)
     else:
         logger.info("No dependency Conflicts")
-
 
 def check_vulnerabilities(py_packages):
     # Check for security vulnerabilities
@@ -52,7 +48,6 @@ def check_vulnerabilities(py_packages):
                 logger.info(vulnerabilities_data)
         except (subprocess.CalledProcessError, json.JSONDecodeError):
             pass
-
     # Print the vulnerabilities
     logger.info("\nSecurity Vulnerabilities:")
     if vulnerabilities_data:
@@ -63,14 +58,12 @@ def check_vulnerabilities(py_packages):
     else:
         logger.info("No security vulnerabilities")
 
-
 def dep_tree():
     # Run pipdeptree command to get dependency tree
     pipdeptree_result = subprocess.run(
         ["pipdeptree", "--json"], capture_output=True, text=True
     )
     pipdeptree_output = pipdeptree_result.stdout
-
     # Parse the dependency tree JSON if it's not empty
     dependency_tree = {}
     if pipdeptree_output:
@@ -78,11 +71,9 @@ def dep_tree():
             dependency_tree = json.loads(pipdeptree_output)
         except json.JSONDecodeError:
             logger.info("Error: Failed to parse dependency tree JSON")
-
     # Print the dependency tree
     logger.info("\nDependency Tree:")
     logger.info(json.dumps(dependency_tree, indent=4))
-
 
 def script_vulnerabilities(dep_script_dir):
     # Run bandit command to check for security vulnerabilities
@@ -90,14 +81,12 @@ def script_vulnerabilities(dep_script_dir):
         ["bandit", "-r", dep_script_dir], capture_output=True, text=True
     )
     bandit_output = bandit_result.stdout
-
     # Print the bandit results
     if bandit_output:
         logger.info("\nBandit Results:")
         logger.info(bandit_output)
     else:
         logger.info("No bandit results")
-
 
 def dependabot():
     # Main function for dependabot.py
