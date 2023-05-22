@@ -29,6 +29,8 @@ pip install -r requirements.txt ```
 
 > NOTE: Supported Python version is 3.11.3 (there can always be version conflicts between the dependencies, OS, hardware etc.).
 
+Then head into the source directory and run ```python dependabot.py```
+
 ---
 
 ## Features
